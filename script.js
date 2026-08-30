@@ -22,7 +22,7 @@ const db = getDatabase(app);
 // ==========================================
 // 🔑 관리자 비밀번호
 // ==========================================
-const ADMIN_PASSWORD = "0602";
+const ADMIN_PASSWORD = "1213RoK";
 
 let approvedTeams = [];
 let pendingTeams = [];
