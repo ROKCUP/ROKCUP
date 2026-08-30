@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ROK CUP | PUBG:KAKAO CLAN CUP">
+  <title>ROK CUP | PUBG COMMUNITY CUP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <!-- 우측 고정 플로팅 네비게이션 -->
+  <aside class="floating-nav">
+    <a href="#home" class="float-item">HOME</a>
+    <a href="#schedule" class="float-item">일정</a>
+    <a href="#rules" class="float-item">규정</a>
+    <a href="#teams" class="float-item">참가팀</a>
+    <a href="#match-results" class="float-item">매치결과</a>
+    <a href="#ranking" class="float-item">순위표</a>
+  </aside>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="ROK CUP 홈">
+        <span class="brand-mark">G</span>
+        <span>
+          <strong>ROK CUP</strong>
+          <small>KAKAO CLAN TOURNAMENT</small>
+        </span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴">☰</button>
+      <nav id="navMenu">
+        <a href="#home">HOME</a>
+        <a href="#schedule">일정</a>
+        <a href="#rules">규정</a>
+        <a href="#teams">참가팀</a>
+        <a href="#match-results">매치결과</a>
+        <a href="#ranking">순위표</a>
+        <button class="nav-apply open-modal-btn">팀 신청</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <!-- Hero Section (이미지 메인 디자인 반영) -->
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="eyebrow">2026 SEASON 1</div>
+        <h1 class="main-title">ROK CUP 클랜 대항전</h1>
+        <p class="hero-copy">실력을 증명하고, 클랜의 명예를 걸어라!</p>
+        
+        <div class="hero-actions">
+          <button class="btn primary open-modal-btn">팀 신청하기 <span>→</span></button>
+          <a class="btn ghost" href="#schedule">ⓘ 대회 안내 보기</a>
+        </div>
+
+        <!-- 이미지 상단 메타 바 (동적 카운터 반영) -->
+        <div class="meta-bar">
+          <div class="meta-card">
+            <div class="meta-icon blue-icon">👥</div>
+            <div class="meta-info">
+              <div class="meta-val">
+                <span id="heroTeamCount">0</span> / 16
+                <span id="closedBadge" class="closed-badge" style="display:none;">마감</span>
+              </div>
+              <div class="meta-lbl">참가 팀</div>
+            </div>
+          </div>
+
+          <div class="meta-card">
+            <div class="meta-icon purple-icon">📅</div>
+            <div class="meta-info">
+              <div class="meta-val">00.00 - 00.00</div>
+              <div class="meta-lbl">대회 기간</div>
+            </div>
+          </div>
+
+          <div class="meta-card">
+            <div class="meta-icon orange-icon">🏆</div>
+            <div class="meta-info">
+              <div class="meta-val">5 MATCH</div>
+              <div class="meta-lbl">매치 진행</div>
+            </div>
+          </div>
+
+          <div class="meta-card">
+            <div class="meta-icon pink-icon">🎯</div>
+            <div class="meta-info">
+              <div class="meta-val">원</div>
+              <div class="meta-lbl">상금 (예정)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 이미지 중단 카테고리 네모 카드 5개 -->
+        <div class="nav-cards-section">
+          <div class="nav-cards-head">
+            <h2>대회 안내</h2>
+            <p>대회에 대한 정보를 확인해보세요.</p>
+          </div>
+          <div class="nav-cards-grid">
+            <a href="#schedule" class="nav-card ">
+              <div class="nav-card-icon text-logo">SCOP</div>
+              <div class="nav-card-text">
+                <h3>대회 안내</h3>
+                <p>대회 일정, 방식, 진행 규칙 등</p>
+                <span class="card-link">바로가기 →</span>
+              </div>
+            </a>
+
+            <a href="#teams" class="nav-card">
+              <div class="nav-card-icon purple-bg">👥</div>
+              <div class="nav-card-text">
+                <h3>참가 팀</h3>
+                <p>신청한 클랜 목록 확인</p>
+                <span class="card-link">바로가기 →</span>
+              </div>
+            </a>
+
+            <a href="#match-results" class="nav-card">
+              <div class="nav-card-icon pink-bg">🏆</div>
+              <div class="nav-card-text">
+                <h3>경기 결과</h3>
+                <p>매치별 결과</p>
+                <span class="card-link">바로가기 →</span>
+              </div>
+            </a>
+
+            <a href="#ranking" class="nav-card">
+              <div class="nav-card-icon magenta-bg">🎯</div>
+              <div class="nav-card-text">
+                <h3>순위표</h3>
+                <p>전체 클랜 순위 및 포인트</p>
+                <span class="card-link">바로가기 →</span>
+              </div>
+            </a>
+
+            <a href="#rules" class="nav-card">
+              <div class="nav-card-icon orange-bg">📄</div>
+              <div class="nav-card-text">
+                <h3>규정</h3>
+                <p>대회 규정 및 유의사항</p>
+                <span class="card-link">바로가기 →</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 티커 -->
+<section class="ticker">
+  <div class="ticker-track">
+    <!-- 1세트 -->
+    <span>ROK CUP SEASON 01</span><i>◆</i>
+    <span>PLAYERUNKNOWN'S BATTLEGROUNDS FOR KAKAO</span><i>◆</i>
+    <span>TEAM REGISTRATION OPEN</span><i>◆</i>
+
+    <!-- 2세트 (연속성을 위해 동일하게 작성) -->
+<span>ROK CUP SEASON 01</span><i>◆</i>
+    <span>PLAYERUNKNOWN'S BATTLEGROUNDS FOR KAKAO</span><i>◆</i>
+    <span>TEAM REGISTRATION OPEN</span><i>◆</i>
+
+    <!-- 3세트 (화면이 넓거나 문구가 짧을 경우 추가) -->
+<span>ROK CUP SEASON 01</span><i>◆</i>
+    <span>PLAYERUNKNOWN'S BATTLEGROUNDS FOR KAKAO</span><i>◆</i>
+    <span>TEAM REGISTRATION OPEN</span><i>◆</i>
+
+<span>ROK CUP SEASON 01</span><i>◆</i>
+    <span>PLAYERUNKNOWN'S BATTLEGROUNDS FOR KAKAO</span><i>◆</i>
+    <span>TEAM REGISTRATION OPEN</span><i>◆</i>
+
+<span>ROK CUP SEASON 01</span><i>◆</i>
+ <span>PLAYERUNKNOWN'S BATTLEGROUNDS FOR KAKAO</span><i>◆</i>
+  </div>
+</section>
+
+    <!-- 01 / 일정 -->
+    <section class="section" id="schedule">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-label">01 / SCHEDULE</span><h2>대회 일정</h2></div>
+          <span class="status-badge">● 참가 신청 진행중</span>
+        </div>
+        <div class="schedule-grid">
+          <article class="schedule-card">
+            <span class="phase">01</span><span class="date">09.13 SAT</span>
+            <h3>참가 신청</h3><p>팀 구성 및 참가 정보 제출</p><b>00:00 — 23:59</b>
+          </article>
+          <article class="schedule-card">
+            <span class="phase">02</span><span class="date">09.14 SUN</span>
+            <h3>대진 발표</h3><p>참가 팀 확인 및 경기 안내</p><b>20:00</b>
+          </article>
+          <article class="schedule-card">
+            <span class="phase">03</span><span class="date">09.20 SAT</span>
+            <h3>본선 MATCH</h3><p>스쿼드 5경기 진행</p><b>20:00 — 23:30</b>
+          </article>
+          <article class="schedule-card">
+            <span class="phase">04</span><span class="date">09.21 SUN</span>
+            <h3>결과 발표</h3><p>최종 순위 및 MVP 공개</p><b>21:00</b>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 / 규정 -->
+    <section class="section dark" id="rules">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-label">02 / FORMAT</span><h2>진행 방식 및 규정</h2></div>
+        </div>
+        <div class="format-grid">
+          <div class="format-main">
+            <span class="big-number">05</span>
+            <h3>5 MATCHES</h3>
+            <p>5개의 경기에서 획득한 순위 점수와 킬 점수를 합산하여 최종 순위를 결정합니다.</p>
+          </div>
+          <div class="rule-list">
+            <div><span>01</span><b>경기 방식</b><p>스쿼드 / 4인 1팀 / 총 5경기</p></div>
+            <div><span>02</span><b>점수 방식</b><p>순위 점수(PUBG 대회 기준) + 킬 점수 합산</p></div>
+            <div><span>03</span><b>맵 구성</b><p>Erangel · Taego</p></div>
+            <div><span>04</span><b>금지 사항</b><p>핵 및 방플 금지</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 / 참가팀 -->
+    <section class="section" id="teams">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-label">03 / TEAMS</span><h2>참가 팀</h2></div>
+          <span class="count" id="teamCount">0 / 16 TEAMS</span>
+        </div>
+        <div class="team-grid" id="teamGrid"></div>
+      </div>
+    </section>
+
+    <!-- 04 / 매치별 결과 -->
+    <section class="section dark" id="match-results">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-label">04 / MATCH RESULTS</span><h2>매치별 결과</h2></div>
+          <div class="admin-only-inline" style="display:none;">
+            <button class="btn primary small-btn" id="uploadMatchImgBtn">현재 매치 이미지 등록</button>
+          </div>
+        </div>
+        <div class="match-tabs">
+          <button class="match-tab active" data-match="0">MATCH 1</button>
+          <button class="match-tab" data-match="1">MATCH 2</button>
+          <button class="match-tab" data-match="2">MATCH 3</button>
+          <button class="match-tab" data-match="3">MATCH 4</button>
+          <button class="match-tab" data-match="4">MATCH 5</button>
+        </div>
+        <div class="match-display" id="matchDisplay">
+          <div class="match-placeholder">해당 매치의 결과 이미지가 아직 등록되지 않았습니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 / 순위표 -->
+    <section class="section ranking-section" id="ranking">
+      <div class="container">
+        <div class="section-head">
+          <div><span class="section-label">05 / LEADERBOARD</span><h2>현재 순위표</h2></div>
+          <div class="admin-only-inline" style="display:none;">
+            <button class="btn primary small-btn" id="saveRankingBtn">순위표 저장 및 정렬</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="rankingTable">
+            <thead>
+              <tr>
+                <th>순위</th>
+                <th>팀명</th>
+                <th>대표 선수</th>
+                <th>킬 수</th>
+                <th>순위 점수</th>
+                <th>총점</th>
+                <th class="admin-col" style="display:none;">관리</th>
+              </tr>
+            </thead>
+            <tbody id="rankingBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 관리자 대기열 모달 -->
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal wide-modal">
+      <button class="modal-close" id="closeAdminModal">×</button>
+      <span class="section-label">ADMIN PANEL</span>
+      <h2>신청 팀 관리 대기열</h2>
+      <p class="modal-desc">접수된 신청서를 확인하고 승인/거절을 진행하세요.</p>
+      <div id="pendingList" class="pending-list"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div><strong>ROK CUP</strong><span>PUBG COMMUNITY TOURNAMENT</span></div>
+      <p>본 사이트는 PUBG 비공식 커뮤니티 대회를 위한 사이트입니다.</p>
+      <span>© 2026 ROK CUP</span>
+    </div>
+  </footer>
+
+  <!-- Floating Admin Controller -->
+  <div class="admin-float-bar">
+    <button id="adminToggleBtn" class="admin-btn">🔒 관리자 로그인</button>
+    <div id="adminControls" class="admin-controls" style="display:none;">
+      <span class="admin-badge">관리자 모드 작동중</span>
+      <button id="openPendingBtn" class="btn ghost small-btn">신청 대기열 (<span id="pendingCount">0</span>)</button>
+      <button id="adminLogoutBtn" class="btn ghost small-btn">로그아웃</button>
+    </div>
+  </div>
+
+  <!-- 팀 신청 모달 -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="닫기">×</button>
+      <span class="section-label">TEAM REGISTRATION</span>
+      <h2 id="modalTitle">팀 신청</h2>
+      <p class="modal-desc">신청 후 관리자 승인을 거쳐 참가 팀 명단에 등록됩니다.</p>
+      <form id="applyForm">
+        <label>팀명<input name="team" maxlength="20" required placeholder="예: ROK"></label>
+        <label>팀장 닉네임<input name="captain" maxlength="24" required placeholder="게임 닉네임"></label>
+        <div class="two-col">
+          <label>팀원 2<input name="player2" maxlength="24" required></label>
+          <label>팀원 3<input name="player3" maxlength="24" required></label>
+        </div>
+        <label>팀원 4<input name="player4" maxlength="24" required></label>
+        <label>디스코드 ID<input name="discord" maxlength="50" placeholder="필수사항"></label>
+        <label class="check"><input type="checkbox" required> 대회 규정을 확인했으며 참가에 동의합니다.</label>
+        <button class="btn primary full" type="submit">신청 제출하기 <span>→</span></button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
