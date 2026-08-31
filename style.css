@@ -311,3 +311,30 @@ input:focus{border-color:#3b82f6}
 @media(max-width:550px){
   .meta-bar,.nav-cards-grid,.schedule-grid,.team-grid,.rule-list{grid-template-columns:1fr}
   .main-title{font-size:32px;}
+}
+
+/* 상단 DISCORD 문구 스타일 (HOME 좌측에 여백 생성) */
+.nav-discord {
+  color: #5865F2 !important; /* 디스코드 브랜드 시그니처 컬러 */
+  font-weight: 700 !important;
+  margin-right: 15px; /* HOME 글자와 띄워주는 여백 */
+  transition: opacity 0.2s;
+}
+.nav-discord:hover {
+  opacity: 0.8;
+  color: #7983f5 !important;
+}
+
+/* 오른쪽 퀵메뉴 디스코드 전용 로고 버튼 스타일 */
+.float-item.float-discord {
+  background: #5865F2; /* 디스코드 색상 배경 */
+  border-color: #5865F2;
+  color: #ffffff;
+  margin-bottom: 10px; /* 아래 메뉴들과 구분되도록 간격 추가 */
+}
+
+.float-item.float-discord:hover {
+  background: #4752C4;
+  border-color: #4752C4;
+  transform: translateX(-3px);
+}
