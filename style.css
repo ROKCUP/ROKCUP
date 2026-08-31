@@ -447,3 +447,44 @@ input:focus{border-color:#3b82f6}
     grid-template-columns: 1fr;
   }
 }
+
+/* Leaderboard Score Header */
+.leaderboard-score-header {
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.score-header-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.score-badges-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sc-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.sc-badge .r-name { font-weight: 700; color: var(--muted); }
+.sc-badge .r-pt { font-weight: 800; color: var(--text); }
+.sc-badge.rank-1 { border-color: rgba(245, 158, 11, 0.5); }
+.sc-badge.rank-1 .r-pt { color: var(--orange); }
+.sc-badge.rank-kill { border-color: rgba(239, 68, 68, 0.5); }
+.sc-badge.rank-kill .r-pt { color: #ef4444; }
