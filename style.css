@@ -518,3 +518,48 @@ input:focus{border-color:#3b82f6}
 .sc-badge.rank-kill { border-color: rgba(239, 68, 68, 0.5); }
 .sc-badge.rank-kill .r-pt { color: #ef4444; }
 
+/* 리더보드 전체 카드 감싸기 및 너비 고정 */
+.leaderboard-card-wrap {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.leaderboard-table th, 
+.leaderboard-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.leaderboard-table th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* 배점표 가이드 너비 조절 */
+.leaderboard-score-header {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
