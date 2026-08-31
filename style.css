@@ -339,121 +339,111 @@ input:focus{border-color:#3b82f6}
   transform: translateX(-3px);
 }
 
-/* Tier System Card Styles */
-.tier-grid {
+/* Tier System Section Styles */
+.tier-section-card {
+  background: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.tier-list-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin: 16px 0;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-.tier-card {
+.tier-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  gap: 14px;
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--line);
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 8px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.tier-badge {
+.tier-row:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.tier-badge-box {
   font-weight: 800;
   font-size: 13px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  background: var(--panel2);
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #fff;
+  min-width: 64px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.tier-1 .tier-badge { color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.3); }
-.tier-2 .tier-badge { color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3); }
-.tier-3 .tier-badge { color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-.tier-4 .tier-badge { color: #eab308; border: 1px solid rgba(234, 179, 8, 0.3); }
+.t-tier1 .tier-badge-box { background: linear-gradient(135deg, #f43f5e, #be123c); }
+.t-tier2 .tier-badge-box { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+.t-tier3 .tier-badge-box { background: linear-gradient(135deg, #10b981, #047857); }
+.t-tier4 .tier-badge-box { background: linear-gradient(135deg, #eab308, #a16207); }
 
-.tier-info {
+.tier-detail {
   display: flex;
   flex-direction: column;
 }
 
-.tier-rank {
+.tier-cond {
   font-size: 13px;
   font-weight: 700;
   color: var(--text);
 }
 
-.tier-score {
+.tier-pts {
   font-size: 11px;
   color: var(--muted);
 }
 
-.tier-rule-box {
+.tier-rule-footer {
   background: var(--bg2);
   border: 1px solid var(--line);
-  padding: 12px 16px;
+  padding: 16px;
   border-radius: 8px;
-  margin-top: 12px;
 }
 
-.rule-title {
-  font-size: 13px;
+.tier-rule-footer .rule-hdr {
+  font-size: 14px;
   font-weight: 700;
   color: var(--orange);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.point-tags {
+.tier-score-tags {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-.point-tags span {
+.tier-score-tags span {
   font-size: 12px;
   background: var(--panel);
-  padding: 3px 8px;
+  border: 1px solid var(--line);
+  padding: 4px 10px;
   border-radius: 4px;
   color: var(--muted);
-  border: 1px solid var(--line);
 }
 
-.point-tags span b {
+.tier-score-tags span b {
   color: var(--text);
 }
 
-.rule-example {
+.tier-rule-footer .sub-desc {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--dim);
 }
 
-@media (max-width: 550px) {
-  .tier-grid { grid-template-columns: 1fr; }
-}
-
-/* 순위 점수 스타일 */
-.rank-points-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 12px;
-}
-
-.point-label {
-  font-weight: 700;
-  color: var(--orange);
-}
-
-.p-item b {
-  color: var(--blue);
-}
-
-.p-item.kill-pt b {
-  color: #ef4444;
+@media (max-width: 768px) {
+  .tier-list-container {
+    grid-template-columns: 1fr;
+  }
 }
