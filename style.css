@@ -310,12 +310,3 @@ input:focus{border-color:#3b82f6}
 @media(max-width:550px){
   .meta-bar,.nav-cards-grid,.schedule-grid,.team-grid,.rule-list{grid-template-columns:1fr}
   .main-title{font-size:32px;}
-}
-
-/* 2. 공통 스타일 영역 (미디어 쿼리 밖으로 이동) */
-.sub-desc {
-  font-size: 9px !important; /* 기본 p 태그(12~13px)보다 작게 설정 */
-  color: #64748b !important;
-  margin-top: 4px !important;
-  display: block;
-}
