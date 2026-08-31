@@ -312,7 +312,7 @@ input:focus{border-color:#3b82f6}
 
   /* 지정한 동그라미 문구만 폰트 크기 조절 */
 .sub-desc{
-  font-size: 10px !important; 
+  font-size: 9px !important; 
   color: #64748b; 
   margin-top: 4px; 
 }
