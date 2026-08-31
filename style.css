@@ -309,11 +309,4 @@ input:focus{border-color:#3b82f6}
 @media(max-width:550px){
   .meta-bar,.nav-cards-grid,.schedule-grid,.team-grid,.rule-list{grid-template-columns:1fr}
   .main-title{font-size:32px;}
-}
 
-/* 지정한 동그라미 문구만 폰트 크기 조절 */
-.sub-desc{
-  font-size: 11px !important; 
-  color: #64748b; 
-  margin-top: 4px; 
-}
