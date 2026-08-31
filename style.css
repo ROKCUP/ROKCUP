@@ -472,9 +472,9 @@ input:focus{border-color:#3b82f6}
   }
 }
 
-/* 섹션 배경 교차(일치) 스타일 */
+.section,
 .section.alt-bg {
-  background-color: var(--bg2) !important;
+  background-color: var(--bg) !important; /* 하나의 기본 어두운 배경으로 통일 */
 }
 
 /* Leaderboard Score Header */
