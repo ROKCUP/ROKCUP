@@ -343,8 +343,8 @@
     </section>
 
     
-  <!-- LEADERBOARD 섹션 -->
-<section class="section alt-bg" id="ranking">
+<!-- LEADERBOARD 섹션 -->
+<section class="section" id="ranking">
   <div class="container">
     <div class="section-head">
       <div>
@@ -368,30 +368,32 @@
       </div>
     </div>
 
-          <div class="admin-only-inline" style="display:none;">
-            <button class="btn primary small-btn" id="saveRankingBtn">순위표 저장 및 정렬</button>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table id="rankingTable">
-            <thead>
-              <tr>
-                <th>순위</th>
-                <th>팀명</th>
-                <th>대표 선수</th>
-                <th>킬 수</th>
-                <th>순위 점수</th>
-                <th>총점</th>
-                <th class="admin-col" style="display:none;">관리</th>
-              </tr>
-            </thead>
-            <tbody id="rankingBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </main>
+    <!-- 관리자 전용 버튼 영역 -->
+    <div class="admin-only-inline" style="display:none; margin-bottom: 12px;">
+      <button class="btn primary small-btn" id="saveRankingBtn">순위표 저장 및 정렬</button>
+    </div>
 
+    <!-- 순위표 테이블 (container 안쪽에 정확히 위치) -->
+    <div class="table-wrap">
+      <table id="rankingTable" class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>팀명</th>
+            <th>대표 선수</th>
+            <th>킬 수</th>
+            <th>순위 점수</th>
+            <th>총점</th>
+            <th class="admin-col" style="display:none;">관리</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </div>
+
+  </div> <!-- container 정확히 닫기 -->
+</section>
+    
   <!-- 관리자 대기열 모달 -->
   <div class="modal-backdrop" id="adminModal">
     <div class="modal wide-modal">
