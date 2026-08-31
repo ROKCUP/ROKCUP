@@ -339,19 +339,26 @@ input:focus{border-color:#3b82f6}
   transform: translateX(-3px);
 }
 
-/* Tier System Section Styles */
+/* Tier System Layout (2-Column Grid) */
 .tier-section-card {
-  background: #0f172a;
-  border: 1px solid #1e293b;
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 24px;
+  padding: 20px;
 }
 
-.tier-list-container {
+.tier-layout-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* 좌측 티어 세로 목록 */
+.tier-list-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .tier-row {
@@ -360,13 +367,13 @@ input:focus{border-color:#3b82f6}
   gap: 14px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid var(--line);
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 8px;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .tier-row:hover {
-  transform: translateY(-2px);
+  transform: translateX(4px);
   border-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -402,33 +409,37 @@ input:focus{border-color:#3b82f6}
   color: var(--muted);
 }
 
-.tier-rule-footer {
+/* 우측 팀 구성 규칙 박스 */
+.tier-rule-sidebox {
   background: var(--bg2);
   border: 1px solid var(--line);
-  padding: 16px;
+  padding: 20px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.tier-rule-footer .rule-hdr {
-  font-size: 14px;
+.tier-rule-sidebox .rule-hdr {
+  font-size: 15px;
   font-weight: 700;
   color: var(--orange);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .tier-score-tags {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .tier-score-tags span {
   font-size: 12px;
   background: var(--panel);
   border: 1px solid var(--line);
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 5px 10px;
+  border-radius: 6px;
   color: var(--muted);
 }
 
@@ -436,14 +447,27 @@ input:focus{border-color:#3b82f6}
   color: var(--text);
 }
 
-.tier-rule-footer .sub-desc {
-  margin: 0;
+.rule-desc-wrap {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.rule-subtitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.sub-desc {
+  margin: 4px 0;
   font-size: 12px;
   color: var(--dim);
 }
 
+/* 모바일 대응 (화면이 좁아지면 상하로 배치) */
 @media (max-width: 768px) {
-  .tier-list-container {
+  .tier-layout-grid {
     grid-template-columns: 1fr;
   }
 }
