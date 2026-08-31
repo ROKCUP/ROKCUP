@@ -117,54 +117,6 @@
                 <span class="card-link">바로가기 →</span>
               </div>
             </a>
-
-<div class="nav-card">
-  <span class="card-step">03</span>
-  <div class="card-tag">TIER SYSTEM</div>
-  <h3>티어 측정 기준 & 팀 구성</h3>
-  
-  <div class="tier-grid">
-    <div class="tier-card tier-1">
-      <div class="tier-badge">1티어</div>
-      <div class="tier-info">
-        <span class="tier-rank">마스터 이상</span>
-        <span class="tier-score">점수 350+</span>
-      </div>
-    </div>
-    <div class="tier-card tier-2">
-      <div class="tier-badge">2티어</div>
-      <div class="tier-info">
-        <span class="tier-rank">다이아 이상</span>
-        <span class="tier-score">점수 250 ~ 350</span>
-      </div>
-    </div>
-    <div class="tier-card tier-3">
-      <div class="tier-badge">3티어</div>
-      <div class="tier-info">
-        <span class="tier-rank">크리스탈 이상</span>
-        <span class="tier-score">점수 150 ~ 250</span>
-      </div>
-    </div>
-    <div class="tier-card tier-4">
-      <div class="tier-badge">4티어</div>
-      <div class="tier-info">
-        <span class="tier-rank">골드 이하</span>
-        <span class="tier-score">점수 ~ 150</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="tier-rule-box">
-    <div class="rule-title">💡 팀 구성 규칙 (포인트 합계: 10점 제한)</div>
-    <div class="point-tags">
-      <span>1티어 <b>4점</b></span>
-      <span>2티어 <b>3점</b></span>
-      <span>3티어 <b>2점</b></span>
-      <span>4티어 <b>1점</b></span>
-    </div>
-    <p class="rule-example">예시: 2티어(3)+2티어(3)+2티어(3)+4티어(1) = 10점 | 1티어(4)+2티어(3)+3티어(2)+4티어(1) = 10점</p>
-  </div>
-</div>
             
             <a href="#teams" class="nav-card">
               <div class="nav-card-icon purple-bg">👥</div>
@@ -286,6 +238,69 @@
       </div>
     </section>
 
+<!-- 02.5 / 티어 시스템 섹션 -->
+    <section class="section" id="tier-system">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-label">03 / TIER SYSTEM</span>
+            <h2>티어 측정 기준 및 팀 구성</h2>
+          </div>
+        </div>
+
+        <div class="tier-section-card">
+          <!-- 티어별 기준 Grid -->
+          <div class="tier-list-container">
+            <div class="tier-row t-tier1">
+              <div class="tier-badge-box">1티어</div>
+              <div class="tier-detail">
+                <span class="tier-cond">최근 3시즌 평균 마스터 이상</span>
+                <span class="tier-pts">점수 350~</span>
+              </div>
+            </div>
+
+            <div class="tier-row t-tier2">
+              <div class="tier-badge-box">2티어</div>
+              <div class="tier-detail">
+                <span class="tier-cond">최근 3시즌 평균 다이아 이상</span>
+                <span class="tier-pts">점수 250 ~ 350</span>
+              </div>
+            </div>
+
+            <div class="tier-row t-tier3">
+              <div class="tier-badge-box">3티어</div>
+              <div class="tier-detail">
+                <span class="tier-cond">최근 3시즌 평균 크리스탈 이상</span>
+                <span class="tier-pts">점수 150 ~ 250</span>
+              </div>
+            </div>
+
+            <div class="tier-row t-tier4">
+              <div class="tier-badge-box">4티어</div>
+              <div class="tier-detail">
+                <span class="tier-cond">최근 3시즌 평균 골드 이하</span>
+                <span class="tier-pts">점수 ~ 150</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 팀 구성 규칙 하단 박스 -->
+          <div class="tier-rule-footer">
+            <div class="rule-hdr">💡 팀 구성 규칙 (총합 10점 제한)</div>
+            <div class="tier-score-tags">
+              <span>1티어 <b>4점</b></span>
+              <span>2티어 <b>3점</b></span>
+              <span>3티어 <b>2점</b></span>
+              <span>4티어 <b>1점</b></span>
+            </div>
+            <p class="sub-desc">
+              예시: 2티어 3명 + 4티어 1명 (3+3+3+1=10점) | 2티어 2명 + 3티어 2명 (3+3+2+2=10점)
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
     <!-- 03 / 참가팀 -->
     <section class="section" id="teams">
       <div class="container">
@@ -319,17 +334,20 @@
       </div>
     </section>
 
-    <div class="rank-points-bar">
-  <span class="point-label">🏆 순위 점수(16팀기준):</span>
-  <span class="p-item"><b>1위</b> 10pt</span>
-  <span class="p-item"><b>2위</b> 6pt</span>
-  <span class="p-item"><b>3위</b> 5pt</span>
-  <span class="p-item"><b>4위</b> 4pt</span>
-  <span class="p-item"><b>5위</b> 3pt</span>
-  <span class="p-item"><b>6위</b> 2pt</span>
-  <span class="p-item"><b>7~8위</b> 1pt</span>
-  <span class="p-item kill-pt"><b>킬 점수</b> 1킬당 1pt</span>
-</div>
+  <!-- 순위점수 가이드 배점표 -->
+        <div class="leaderboard-score-header">
+          <div class="score-header-title">RANKING POINTS</div>
+          <div class="score-badges-wrap">
+            <div class="sc-badge rank-1"><span class="r-name">1위</span> <span class="r-pt">10 pts</span></div>
+            <div class="sc-badge rank-2"><span class="r-name">2위</span> <span class="r-pt">6 pts</span></div>
+            <div class="sc-badge rank-3"><span class="r-name">3위</span> <span class="r-pt">5 pts</span></div>
+            <div class="sc-badge rank-4"><span class="r-name">4위</span> <span class="r-pt">4 pts</span></div>
+            <div class="sc-badge rank-5"><span class="r-name">5위</span> <span class="r-pt">3 pts</span></div>
+            <div class="sc-badge rank-6"><span class="r-name">6위</span> <span class="r-pt">2 pts</span></div>
+            <div class="sc-badge rank-78"><span class="r-name">7~8위</span> <span class="r-pt">1 pt</span></div>
+            <div class="sc-badge rank-kill"><span class="r-name">1 Kill</span> <span class="r-pt">1 pt</span></div>
+          </div>
+        </div>
     
     <!-- 05 / 순위표 -->
     <section class="section ranking-section" id="ranking">
