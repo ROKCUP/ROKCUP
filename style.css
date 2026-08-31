@@ -472,6 +472,11 @@ input:focus{border-color:#3b82f6}
   }
 }
 
+/* 섹션 배경 교차(일치) 스타일 */
+.section.alt-bg {
+  background-color: var(--bg2) !important;
+}
+
 /* Leaderboard Score Header */
 .leaderboard-score-header {
   background: var(--panel2);
@@ -512,3 +517,4 @@ input:focus{border-color:#3b82f6}
 .sc-badge.rank-1 .r-pt { color: var(--orange); }
 .sc-badge.rank-kill { border-color: rgba(239, 68, 68, 0.5); }
 .sc-badge.rank-kill .r-pt { color: #ef4444; }
+
