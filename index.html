@@ -239,7 +239,7 @@
     </section>
 
 <!-- 03 / TIER SYSTEM 섹션 -->
-<section class="section" id="tier-system">
+<section class="section alt-b" id="tier-system">
   <div class="container">
     <div class="section-head">
       <div>
@@ -313,7 +313,7 @@
     <section class="section" id="teams">
       <div class="container">
         <div class="section-head">
-          <div><span class="section-label">03 / TEAMS</span><h2>참가 팀</h2></div>
+          <div><span class="section-label">04 / TEAMS</span><h2>참가 팀</h2></div>
           <span class="count" id="teamCount">0 / 16 TEAMS</span>
         </div>
         <div class="team-grid" id="teamGrid"></div>
@@ -324,7 +324,7 @@
     <section class="section dark" id="match-results">
       <div class="container">
         <div class="section-head">
-          <div><span class="section-label">04 / MATCH RESULTS</span><h2>매치별 결과</h2></div>
+          <div><span class="section-label">05 / MATCH RESULTS</span><h2>매치별 결과</h2></div>
           <div class="admin-only-inline" style="display:none;">
             <button class="btn primary small-btn" id="uploadMatchImgBtn">현재 매치 이미지 등록</button>
           </div>
@@ -343,47 +343,48 @@
     </section>
 
     
-    <!-- 05 / 순위표 -->
-    <section class="section ranking-section" id="ranking">
-      <div class="container">
-        <div class="section-head">
-          <div><span class="section-label">05 / LEADERBOARD</span><h2>현재 순위표</h2></div>
-
-          <!-- 순위표 패널 박스 (배점표 + 테이블 통합) -->
-    <div class="leaderboard-card-panel">
-      <!-- 순위 점수 안내 바 (테이블 상단 통합) -->
-      <div class="ranking-points-inline">
-        <span class="pts-title">RANKING POINTS</span>
-        <div class="pts-badges">
-          <span class="pt-item r-1"><b>1위</b> 10 pts</span>
-          <span class="pt-item"><b>2위</b> 6 pts</span>
-          <span class="pt-item"><b>3위</b> 5 pts</span>
-          <span class="pt-item"><b>4위</b> 4 pts</span>
-          <span class="pt-item"><b>5위</b> 3 pts</span>
-          <span class="pt-item"><b>6위</b> 2 pts</span>
-          <span class="pt-item"><b>7~8위</b> 1 pt</span>
-          <span class="pt-item r-kill"><b>1 Kill</b> 1 pt</span>
-        </div>
+  <!-- LEADERBOARD 섹션 -->
+<section class="section" id="ranking">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="section-label">06 / LEADERBOARD</span>
+        <h2>현재 순위표</h2>
       </div>
+    </div>
 
-      <!-- 순위표 테이블 -->
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th>팀명</th>
-              <th>대표 선수</th>
-              <th>킬 수</th>
-              <th>순위 점수</th>
-              <th>총점</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 기존 순위 데이터 행들 -->
-          </tbody>
-        </table>
+    <!-- 순위점수 가이드 배점표 -->
+    <div class="leaderboard-score-header">
+      <div class="score-header-title">RANKING POINTS</div>
+      <div class="score-badges-wrap">
+        <div class="sc-badge rank-1"><span class="r-name">1위</span> <span class="r-pt">10 pts</span></div>
+        <div class="sc-badge rank-2"><span class="r-name">2위</span> <span class="r-pt">6 pts</span></div>
+        <div class="sc-badge rank-3"><span class="r-name">3위</span> <span class="r-pt">5 pts</span></div>
+        <div class="sc-badge rank-4"><span class="r-name">4위</span> <span class="r-pt">4 pts</span></div>
+        <div class="sc-badge rank-5"><span class="r-name">5위</span> <span class="r-pt">3 pts</span></div>
+        <div class="sc-badge rank-6"><span class="r-name">6위</span> <span class="r-pt">2 pts</span></div>
+        <div class="sc-badge rank-78"><span class="r-name">7~8위</span> <span class="r-pt">1 pt</span></div>
+        <div class="sc-badge rank-kill"><span class="r-name">1 Kill</span> <span class="r-pt">1 pt</span></div>
       </div>
+    </div>
+
+    <!-- 테이블 영역 -->
+    <div class="table-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>순위</th>
+            <th>팀명</th>
+            <th>대표 선수</th>
+            <th>킬수</th>
+            <th>순위 점수</th>
+            <th>총점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 기존 테이블 내용 (1위 ~ 16위) -->
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
