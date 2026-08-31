@@ -230,6 +230,7 @@ nav{display:flex;gap:25px;align-items:center;font-size:12px;font-weight:500}nav 
 .big-number{font-weight:800;font-size:80px;line-height:.8;color:#1e293b}
 .format-main h3{font-size:22px;font-weight:700;margin:20px 0 6px}
 .format-main p{color:#64748b;font-size:13px}
+.format-main b{font-size:11px;color:#94a3b8}
 /* Format 카드 정렬 */
 .rule-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rule-list div{background:#0f172a;border:1px solid #1e293b;padding:20px;border-radius:8px}
