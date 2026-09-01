@@ -1243,3 +1243,33 @@ input:focus {
   padding: 70px 0;
   border-bottom: 1px solid var(--line); /* 섹션 아래쪽에 테두리(선) 추가 */
 }
+
+/* 티어 점수 그룹 전체 감싸는 스타일 */
+.tier-scores-wrapper {
+  margin-bottom: 16px;
+}
+
+.tier-scores-label {
+  display: block;
+  font-size: 13px;
+  color: #a0aec0;
+  margin-bottom: 6px;
+}
+
+/* 4열 레이아웃 */
+.four-col {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.four-col label {
+  font-size: 12px;
+  color: #8b9bb4;
+  margin-bottom: 0;
+}
+
+.four-col input {
+  text-align: center;
+  padding: 8px 4px;
+}
