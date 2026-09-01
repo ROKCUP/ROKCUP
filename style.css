@@ -1363,3 +1363,10 @@ input:focus {
     text-align: center;
   }
 }
+
+/* 순위표(.leaderboard-table) 내의 헤더와 본문 셀 정렬을 가운데로 통일 */
+.leaderboard-table th, 
+.leaderboard-table td {
+  text-align: center !important;
+  vertical-align: middle;
+}
