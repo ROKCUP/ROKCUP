@@ -419,51 +419,26 @@
         </div>
         <label>4티어<input name="player4" maxlength="24" required placeholder="..."></label>
 
-<!-- 팀 신청 모달 -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="closeModal" aria-label="닫기">×</button>
-    <span class="section-label">TEAM REGISTRATION</span>
-    <h2 id="modalTitle">팀 신청</h2>
-    <p class="modal-desc">전적확인 후 관리자 승인을 거쳐 참가 팀 명단에 등록됩니다.</p>
-    <p class="modal-desc">부계정 및 타인계정 / 티어 속이기 절대 금지입니다.(적발시 상금 취소)</p>
-    
-    <form id="applyForm">
-      <label>팀명<input name="team" maxlength="20" required placeholder="예: ROK"></label>
-      <label>1티어(팀장)<input name="captain" maxlength="24" required placeholder="게임 닉네임"></label>
-      <div class="two-col">
-        <label>2티어<input name="player2" maxlength="24" required placeholder="..."></label>
-        <label>3티어<input name="player3" maxlength="24" required placeholder="..."></label>
-      </div>
-      <label>4티어<input name="player4" maxlength="24" required placeholder="..."></label>
-
-      <!-- 티어별 점수 입력 영역 (4열 배치) -->
-      <div class="tier-scores-wrapper">
-        <span class="tier-scores-label">팀원별 티어 점수</span>
-        <div class="four-col">
-          <label>1티어
-            <input type="number" name="score1" min="1" max="4" value="4" required readonly>
-          </label>
-          <label>2티어
-            <input type="number" name="score2" min="1" max="4" value="3" required>
-          </label>
-          <label>3티어
-            <input type="number" name="score3" min="1" max="4" value="2" required>
-          </label>
-          <label>4티어
-            <input type="number" name="score4" min="1" max="4" value="1" required>
-          </label>
+        <!-- 티어별 점수 입력 영역 (4열 배치) -->
+        <div class="tier-scores-wrapper">
+          <span class="tier-scores-label">팀원별 티어 점수</span>
+          <div class="four-col">
+            <label>1티어
+              <input type="number" name="score1" min="1" max="4" value="4" required readonly>
+            </label>
+            <label>2티어
+              <input type="number" name="score2" min="1" max="4" value="3" required>
+            </label>
+            <label>3티어
+              <input type="number" name="score3" min="1" max="4" value="2" required>
+            </label>
+            <label>4티어
+              <input type="number" name="score4" min="1" max="4" value="1" required>
+            </label>
+          </div>
         </div>
-      </div>
 
-      <label>팀장 디스코드 ID<input name="discord" maxlength="50" required placeholder="필수사항"></label>
-      <label class="check"><input type="checkbox" required> 대회 규정을 확인했으며 참가에 동의합니다.</label>
-      <button class="btn primary full" type="submit">신청 제출하기 <span>→</span></button>
-    </form>
-  </div>
-</div>
-        
-        <label>팀장 디스코드 ID<input name="discord" maxlength="50" placeholder="필수사항"></label>
+        <label>팀장 디스코드 ID<input name="discord" maxlength="50" required placeholder="필수사항"></label>
         <label class="check"><input type="checkbox" required> 대회 규정을 확인했으며 참가에 동의합니다.</label>
         <button class="btn primary full" type="submit">신청 제출하기 <span>→</span></button>
       </form>
