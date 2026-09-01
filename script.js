@@ -35,13 +35,13 @@ let currentMatchIndex = 0;
 const $ = s => document.querySelector(s);
 const modal = $("#modal");
 const adminModal = $("#adminModal");
+const successModal = $("#successModal");
 const teamGrid = $("#teamGrid");
 
 // ==========================================
 // 🔑 기본 데이터 초기화
 // ==========================================
 
-// 초기 순위 데이터 생성 (7개 항목: [순위, 팀명, 대표선수, 킬수, 순위점수, 총점, 티어조합])
 function createInitialRanking() {
   const initial = [];
   while (initial.length < 16) {
@@ -51,24 +51,21 @@ function createInitialRanking() {
 }
 
 // ==========================================
-// 🔄 Firebase 실시간 데이터 동기화 (Realtime Listeners)
+// 🔄 Firebase 실시간 데이터 동기화
 // ==========================================
 
-// 1. 승인된 팀 목록 감지
 onValue(ref(db, "approved_teams"), (snapshot) => {
   const val = snapshot.val();
   approvedTeams = val ? val : [];
   renderTeams();
 });
 
-// 2. 대기 팀 목록 감지
 onValue(ref(db, "pending_teams"), (snapshot) => {
   const val = snapshot.val();
   pendingTeams = val ? val : [];
   renderPendingList();
 });
 
-// 3. 순위표 실시간 데이터 감지
 onValue(ref(db, "ranking_data"), (snapshot) => {
   const val = snapshot.val();
   if (!val) {
@@ -79,14 +76,13 @@ onValue(ref(db, "ranking_data"), (snapshot) => {
       parsed.push([String(parsed.length + 1), "-", "-", "0", "0", "0", "-"]);
     }
     rankingData = parsed.map(row => {
-      if (row.length < 7) row.push("-"); // 기본 데이터 호환성
+      if (row.length < 7) row.push("-");
       return row;
     }).slice(0, 16);
   }
   renderRanking();
 });
 
-// 4. 매치 결과 이미지 감지
 onValue(ref(db, "match_images"), (snapshot) => {
   const val = snapshot.val();
   matchImages = val ? val : ["", "", "", "", ""];
@@ -94,7 +90,7 @@ onValue(ref(db, "match_images"), (snapshot) => {
 });
 
 // ==========================================
-// 🎨 Render Functions (화면 렌더링 함수)
+// 🎨 Render Functions
 // ==========================================
 
 function renderTeams() {
@@ -121,7 +117,6 @@ function renderTeams() {
       teamGrid.insertAdjacentHTML("beforeend", `<div class="empty">OPEN SLOT<br><span>TEAM ${String(i + 1).padStart(2, "0")}</span></div>`);
     }
 
-    // 팀 삭제 버튼 이벤트 바인딩
     teamGrid.querySelectorAll("[data-del-team]").forEach(btn => {
       btn.addEventListener("click", e => {
         const idx = parseInt(e.target.dataset.delTeam, 10);
@@ -131,7 +126,6 @@ function renderTeams() {
   }
 }
 
-// 순위표 렌더링 (일반 사용자 및 관리자 모두 7번째 열 표시)
 function renderRanking() {
   const body = $("#rankingBody");
   if (!body) return;
@@ -156,7 +150,6 @@ function renderRanking() {
   }).join("");
 }
 
-// 관리자 신청 대기열 렌더링
 function renderPendingList() {
   const container = $("#pendingList");
   if (!container) return;
@@ -205,7 +198,7 @@ function renderMatchDisplay() {
 }
 
 // ==========================================
-// 🖱️ Event Listeners & Handlers (이벤트 및 액션 처리)
+// 🖱️ Event Listeners & Handlers
 // ==========================================
 
 document.querySelectorAll(".match-tab").forEach(tab => {
@@ -217,7 +210,6 @@ document.querySelectorAll(".match-tab").forEach(tab => {
   });
 });
 
-// 매치 이미지 관리자 등록
 $("#uploadMatchImgBtn")?.addEventListener("click", () => {
   const inputType = prompt(`MATCH ${currentMatchIndex + 1} 이미지 등록 방식을 선택하세요:\n1. URL 입력\n2. 이미지 삭제`, "1");
 
@@ -235,18 +227,16 @@ $("#uploadMatchImgBtn")?.addEventListener("click", () => {
   }
 });
 
-// 팀 신청 제출 (단일화 및 가운데 점 구분자 적용)
+// 팀 신청 제출
 $("#applyForm")?.addEventListener("submit", e => {
   e.preventDefault();
   const form = new FormData(e.currentTarget);
   
-  // 1. 입력받은 티어 값 가져오기
   const t1 = form.get("tier1")?.toString().trim() || "1";
   const t2 = form.get("tier2")?.toString().trim() || "2";
   const t3 = form.get("tier3")?.toString().trim() || "3";
   const t4 = form.get("tier4")?.toString().trim() || "4";
 
-  // 2. 가운데 점(·) 구분자로 연결하여 생성 (예: "1 · 2 · 3 · 4")
   const tierComboStr = `${t1} · ${t2} · ${t3} · ${t4}`;
 
   const newTeam = {
@@ -274,10 +264,11 @@ $("#applyForm")?.addEventListener("submit", e => {
 
   e.currentTarget.reset();
   closeModal();
-  showToast("신청이 완료되었습니다! 관리자 승인 후 등록됩니다.");
+  
+  // 성공 완료 모달 띄우기
+  openSuccessModal();
 });
 
-// 관리자 기능: 참가팀 삭제
 function deleteApprovedTeam(index) {
   if (!confirm("이 팀을 참가 명단에서 삭제하시겠습니까?")) return;
   const removedTeam = approvedTeams.splice(index, 1)[0];
@@ -293,7 +284,6 @@ function deleteApprovedTeam(index) {
   showToast("팀이 삭제되었습니다.");
 }
 
-// 관리자 기능: 팀 승인
 function approveTeam(index) {
   if (approvedTeams.length >= 16) {
     showToast("16팀 슬롯이 마감되었습니다.");
@@ -306,7 +296,6 @@ function approveTeam(index) {
   set(ref(db, "pending_teams"), pendingTeams);
   set(ref(db, "approved_teams"), approvedTeams);
 
-  // 빈 순위 슬롯에 팀명과 대표선수, 티어 조합을 자동 등록
   const emptyIndex = rankingData.findIndex(r => r[1] === "-" || r[1] === "");
   if (emptyIndex !== -1) {
     rankingData[emptyIndex][1] = team.name;
@@ -318,22 +307,12 @@ function approveTeam(index) {
   showToast(`'${team.name}' 팀이 승인되었습니다.`);
 }
 
-// 관리자 기능: 팀 거절
 function rejectTeam(index) {
   pendingTeams.splice(index, 1);
   set(ref(db, "pending_teams"), pendingTeams);
   showToast("신청을 거절했습니다.");
 }
 
-// 관리자 기능: 순위 행 초기화
-function deleteRankingRow(index) {
-  if (!confirm("이 순위 행을 초기화하시겠습니까?")) return;
-  rankingData[index] = [String(index + 1), "-", "-", "0", "0", "0", "-"];
-  set(ref(db, "ranking_data"), rankingData);
-  showToast("행이 초기화되었습니다.");
-}
-
-// 순위표 저장 및 자동 정렬
 $("#saveRankingBtn")?.addEventListener("click", () => {
   const rows = document.querySelectorAll("#rankingBody tr");
   let newRanking = [];
@@ -377,7 +356,6 @@ $("#saveRankingBtn")?.addEventListener("click", () => {
   showToast("총점이 순위별로 재정렬 및 실시간 업데이트 되었습니다.");
 });
 
-// 관리자 인증
 $("#adminToggleBtn")?.addEventListener("click", () => {
   const pw = prompt("관리자 비밀번호를 입력하세요:");
   if (pw === ADMIN_PASSWORD) {
@@ -408,8 +386,12 @@ function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
 }
 
+// 모달 제어 함수
 function openModal() { modal?.classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeModal() { modal?.classList.remove("open"); document.body.style.overflow = ""; }
+
+function openSuccessModal() { successModal?.classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeSuccessModal() { successModal?.classList.remove("open"); document.body.style.overflow = ""; }
 
 document.querySelectorAll(".open-modal-btn").forEach(btn => {
   btn.addEventListener("click", openModal);
@@ -418,12 +400,20 @@ document.querySelectorAll(".open-modal-btn").forEach(btn => {
 $("#closeModal")?.addEventListener("click", closeModal);
 modal?.addEventListener("click", e => { if (e.target === modal) closeModal(); });
 
+$("#closeSuccessModal")?.addEventListener("click", closeSuccessModal);
+$("#successDiscordBtn")?.addEventListener("click", () => closeSuccessModal());
+successModal?.addEventListener("click", e => { if (e.target === successModal) closeSuccessModal(); });
+
 $("#openPendingBtn")?.addEventListener("click", () => adminModal?.classList.add("open"));
 $("#closeAdminModal")?.addEventListener("click", () => adminModal?.classList.remove("open"));
 adminModal?.addEventListener("click", e => { if (e.target === adminModal) adminModal?.classList.remove("open"); });
 
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") { closeModal(); adminModal?.classList.remove("open"); }
+  if (e.key === "Escape") { 
+    closeModal(); 
+    closeSuccessModal();
+    adminModal?.classList.remove("open"); 
+  }
 });
 
 function showToast(text) {
