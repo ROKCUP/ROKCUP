@@ -37,10 +37,11 @@ const modal = $("#modal");
 const adminModal = $("#adminModal");
 const teamGrid = $("#teamGrid");
 
+// 초기 순위 데이터 생성 (7개 항목: [순위, 팀명, 대표선수, 킬수, 순위점수, 총점, 팀점수])
 function createInitialRanking() {
   const initial = [];
   while (initial.length < 16) {
-    initial.push([String(initial.length + 1), "-", "-", "0", "0", "0"]);
+    initial.push([String(initial.length + 1), "-", "-", "0", "0", "0", "10"]);
   }
   return initial;
 }
@@ -71,9 +72,12 @@ onValue(ref(db, "ranking_data"), (snapshot) => {
   } else {
     let parsed = val;
     while (parsed.length < 16) {
-      parsed.push([String(parsed.length + 1), "-", "-", "0", "0", "0"]);
+      parsed.push([String(parsed.length + 1), "-", "-", "0", "0", "0", "10"]);
     }
-    rankingData = parsed.slice(0, 16);
+    rankingData = parsed.map(row => {
+      if (row.length < 7) row.push("10"); // 기존 6개 항목 데이터 호환성 처리
+      return row;
+    }).slice(0, 16);
   }
   renderRanking();
 });
@@ -135,16 +139,17 @@ function renderRanking() {
       <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[3] || '0')}</td>
       <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[4] || '0')}</td>
       <td><strong>${escapeHtml(r[5] || '0')}</strong></td>
-      ${isAdmin ? `<td><button class="card-del-btn" data-del-rank="${i}">초기화</button></td>` : ''}
+      ${isAdmin ? `
+        <td class="admin-col" contenteditable="true" style="color: #40c057; font-weight: bold;">
+          ${escapeHtml(r[6] || '10')}점
+        </td>
+      ` : ''}
     </tr>
   `).join("");
 
-  // 순위 행 초기화 버튼 이벤트 바인딩
-  body.querySelectorAll("[data-del-rank]").forEach(btn => {
-    btn.addEventListener("click", e => {
-      const idx = parseInt(e.target.dataset.delRank, 10);
-      deleteRankingRow(idx);
-    });
+  // 관리자 모드 여부에 따른 admin-col 디스플레이 제어
+  document.querySelectorAll(".admin-col").forEach(el => {
+    el.style.display = isAdmin ? "table-cell" : "none";
   });
 }
 
@@ -164,6 +169,7 @@ function renderPendingList() {
       <div class="pending-info">
         <h4>${escapeHtml(team.name)} <small style="font-size:11px; color:#64748b;">(디스코드: ${escapeHtml(team.discord || '없음')})</small></h4>
         <p>팀장: ${escapeHtml(team.players[0])} / 팀원: ${team.players.slice(1).map(escapeHtml).join(', ')}</p>
+        <p style="font-size:12px; color:#40c057; margin-top:4px;"><b>팀 점수:</b> ${team.tierScore || 10}점</p>
       </div>
       <div class="pending-actions">
         <button class="btn-approve" data-approve="${index}">승인</button>
@@ -228,9 +234,18 @@ $("#uploadMatchImgBtn")?.addEventListener("click", () => {
 $("#applyForm")?.addEventListener("submit", e => {
   e.preventDefault();
   const form = new FormData(e.currentTarget);
+  
+  // 입력받은 티어별 점수 계산
+  const s1 = parseInt(form.get("score1") || 4, 10);
+  const s2 = parseInt(form.get("score2") || 3, 10);
+  const s3 = parseInt(form.get("score3") || 2, 10);
+  const s4 = parseInt(form.get("score4") || 1, 10);
+  const totalTierScore = s1 + s2 + s3 + s4;
+
   const newTeam = {
     name: form.get("team").trim(),
     players: [form.get("captain"), form.get("player2"), form.get("player3"), form.get("player4")].map(v => v.trim()),
+    tierScore: totalTierScore,
     discord: form.get("discord")?.trim() || ""
   };
 
@@ -264,7 +279,7 @@ function deleteApprovedTeam(index) {
   if (removedTeam) {
     const rankIndex = rankingData.findIndex(r => r[1] === removedTeam.name);
     if (rankIndex !== -1) {
-      rankingData[rankIndex] = [String(rankIndex + 1), "-", "-", "0", "0", "0"];
+      rankingData[rankIndex] = [String(rankIndex + 1), "-", "-", "0", "0", "0", "10"];
       set(ref(db, "ranking_data"), rankingData);
     }
   }
@@ -288,6 +303,7 @@ function approveTeam(index) {
   if (emptyIndex !== -1) {
     rankingData[emptyIndex][1] = team.name;
     rankingData[emptyIndex][2] = team.players[0];
+    rankingData[emptyIndex][6] = String(team.tierScore || 10);
     set(ref(db, "ranking_data"), rankingData);
   }
 
@@ -304,7 +320,7 @@ function rejectTeam(index) {
 // 관리자 기능: 순위 행 초기화
 function deleteRankingRow(index) {
   if (!confirm("이 순위 행을 초기화하시겠습니까?")) return;
-  rankingData[index] = [String(index + 1), "-", "-", "0", "0", "0"];
+  rankingData[index] = [String(index + 1), "-", "-", "0", "0", "0", "10"];
   set(ref(db, "ranking_data"), rankingData);
   showToast("행이 초기화되었습니다.");
 }
@@ -322,6 +338,7 @@ $("#saveRankingBtn")?.addEventListener("click", () => {
       const kills = parseInt(tds[3].innerText.replace(/[^0-9]/g, ""), 10) || 0;
       const rankPts = parseInt(tds[4].innerText.replace(/[^0-9]/g, ""), 10) || 0;
       const totalPts = kills + rankPts;
+      const tierScore = tds[6] ? tds[6].innerText.replace(/[^0-9]/g, "").trim() || "10" : "10";
 
       newRanking.push([
         String(idx + 1),
@@ -329,7 +346,8 @@ $("#saveRankingBtn")?.addEventListener("click", () => {
         captain,
         String(kills),
         String(rankPts),
-        String(totalPts)
+        String(totalPts),
+        tierScore
       ]);
     }
   });
