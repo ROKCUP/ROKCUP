@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // ==========================================
-// 🔑 관리자 비밀번호
+// 🔑 관리자 비밀번호 및 변수 설정
 // ==========================================
 const ADMIN_PASSWORD = "1213RoK";
 
@@ -37,11 +37,15 @@ const modal = $("#modal");
 const adminModal = $("#adminModal");
 const teamGrid = $("#teamGrid");
 
-// 초기 순위 데이터 생성 (7개 항목: [순위, 팀명, 대표선수, 킬수, 순위점수, 총점, 팀점수])
+// ==========================================
+// 🔑 기본 데이터 초기화
+// ==========================================
+
+// 초기 순위 데이터 생성 (7개 항목: [순위, 팀명, 대표선수, 킬수, 순위점수, 총점, 티어조합])
 function createInitialRanking() {
   const initial = [];
   while (initial.length < 16) {
-    initial.push([String(initial.length + 1), "-", "-", "0", "0", "0", "10"]);
+    initial.push([String(initial.length + 1), "-", "-", "0", "0", "0", "-"]);
   }
   return initial;
 }
@@ -64,7 +68,7 @@ onValue(ref(db, "pending_teams"), (snapshot) => {
   renderPendingList();
 });
 
-// 3. 순위표 감지
+// 3. 순위표 실시간 데이터 감지
 onValue(ref(db, "ranking_data"), (snapshot) => {
   const val = snapshot.val();
   if (!val) {
@@ -72,10 +76,10 @@ onValue(ref(db, "ranking_data"), (snapshot) => {
   } else {
     let parsed = val;
     while (parsed.length < 16) {
-      parsed.push([String(parsed.length + 1), "-", "-", "0", "0", "0", "10"]);
+      parsed.push([String(parsed.length + 1), "-", "-", "0", "0", "0", "-"]);
     }
     rankingData = parsed.map(row => {
-      if (row.length < 7) row.push("10"); // 기존 6개 항목 데이터 호환성 처리
+      if (row.length < 7) row.push("-"); // 기본 데이터 호환성
       return row;
     }).slice(0, 16);
   }
@@ -90,7 +94,7 @@ onValue(ref(db, "match_images"), (snapshot) => {
 });
 
 // ==========================================
-// 🎨 Render Functions (화면 그리기)
+// 🎨 Render Functions (화면 렌더링 함수)
 // ==========================================
 
 function renderTeams() {
@@ -127,32 +131,32 @@ function renderTeams() {
   }
 }
 
+// 순위표 렌더링 (일반 사용자 및 관리자 모두 7번째 열 표시)
 function renderRanking() {
   const body = $("#rankingBody");
   if (!body) return;
 
-  body.innerHTML = rankingData.map((r, i) => `
-    <tr>
-      <td>${i + 1}</td>
-      <td ${isAdmin ? 'contenteditable="true"' : ''}><strong>${escapeHtml(r[1] || '-')}</strong></td>
-      <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[2] || '-')}</td>
-      <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[3] || '0')}</td>
-      <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[4] || '0')}</td>
-      <td><strong>${escapeHtml(r[5] || '0')}</strong></td>
-      ${isAdmin ? `
-        <td class="admin-col" contenteditable="true" style="color: #40c057; font-weight: bold;">
-          ${escapeHtml(r[6] || '10')}점
-        </td>
-      ` : ''}
-    </tr>
-  `).join("");
+  body.innerHTML = rankingData.map((r, i) => {
+    const isTeamEmpty = !r[1] || r[1] === "-";
+    const tierComboDisplay = isTeamEmpty ? "-" : (r[6] || "-");
 
-  // 관리자 모드 여부에 따른 admin-col 디스플레이 제어
-  document.querySelectorAll(".admin-col").forEach(el => {
-    el.style.display = isAdmin ? "table-cell" : "none";
-  });
+    return `
+      <tr>
+        <td>${i + 1}</td>
+        <td ${isAdmin ? 'contenteditable="true"' : ''}><strong>${escapeHtml(r[1] || '-')}</strong></td>
+        <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[2] || '-')}</td>
+        <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[3] || '0')}</td>
+        <td ${isAdmin ? 'contenteditable="true"' : ''}>${escapeHtml(r[4] || '0')}</td>
+        <td><strong>${escapeHtml(r[5] || '0')}</strong></td>
+        <td ${isAdmin ? 'contenteditable="true"' : ''} style="color: #38bdf8; font-weight: bold;">
+          ${escapeHtml(tierComboDisplay)}
+        </td>
+      </tr>
+    `;
+  }).join("");
 }
 
+// 관리자 신청 대기열 렌더링
 function renderPendingList() {
   const container = $("#pendingList");
   if (!container) return;
@@ -169,7 +173,9 @@ function renderPendingList() {
       <div class="pending-info">
         <h4>${escapeHtml(team.name)} <small style="font-size:11px; color:#64748b;">(디스코드: ${escapeHtml(team.discord || '없음')})</small></h4>
         <p>팀장: ${escapeHtml(team.players[0])} / 팀원: ${team.players.slice(1).map(escapeHtml).join(', ')}</p>
-        <p style="font-size:12px; color:#40c057; margin-top:4px;"><b>팀 점수:</b> ${team.tierScore || 10}점</p>
+        <p style="font-size:12px; color:#38bdf8; margin-top:6px;">
+          <b>티어 조합:</b> ${escapeHtml(team.tierCombo || "-")}
+        </p>
       </div>
       <div class="pending-actions">
         <button class="btn-approve" data-approve="${index}">승인</button>
@@ -178,7 +184,6 @@ function renderPendingList() {
     </div>
   `).join("");
 
-  // 승인/거절 버튼 이벤트 바인딩
   container.querySelectorAll("[data-approve]").forEach(btn => {
     btn.addEventListener("click", e => approveTeam(parseInt(e.target.dataset.approve, 10)));
   });
@@ -200,7 +205,7 @@ function renderMatchDisplay() {
 }
 
 // ==========================================
-// 🖱️ Event Listeners & Handlers
+// 🖱️ Event Listeners & Handlers (이벤트 및 액션 처리)
 // ==========================================
 
 document.querySelectorAll(".match-tab").forEach(tab => {
@@ -230,22 +235,24 @@ $("#uploadMatchImgBtn")?.addEventListener("click", () => {
   }
 });
 
-// 팀 신청 제출
+// 팀 신청 제출 (단일화 및 가운데 점 구분자 적용)
 $("#applyForm")?.addEventListener("submit", e => {
   e.preventDefault();
   const form = new FormData(e.currentTarget);
   
-  // 입력받은 티어별 점수 계산
-  const s1 = parseInt(form.get("score1") || 4, 10);
-  const s2 = parseInt(form.get("score2") || 3, 10);
-  const s3 = parseInt(form.get("score3") || 2, 10);
-  const s4 = parseInt(form.get("score4") || 1, 10);
-  const totalTierScore = s1 + s2 + s3 + s4;
+  // 1. 입력받은 티어 값 가져오기
+  const t1 = form.get("tier1")?.toString().trim() || "1";
+  const t2 = form.get("tier2")?.toString().trim() || "2";
+  const t3 = form.get("tier3")?.toString().trim() || "3";
+  const t4 = form.get("tier4")?.toString().trim() || "4";
+
+  // 2. 가운데 점(·) 구분자로 연결하여 생성 (예: "1 · 2 · 3 · 4")
+  const tierComboStr = `${t1} · ${t2} · ${t3} · ${t4}`;
 
   const newTeam = {
     name: form.get("team").trim(),
     players: [form.get("captain"), form.get("player2"), form.get("player3"), form.get("player4")].map(v => v.trim()),
-    tierScore: totalTierScore,
+    tierCombo: tierComboStr,
     discord: form.get("discord")?.trim() || ""
   };
 
@@ -279,7 +286,7 @@ function deleteApprovedTeam(index) {
   if (removedTeam) {
     const rankIndex = rankingData.findIndex(r => r[1] === removedTeam.name);
     if (rankIndex !== -1) {
-      rankingData[rankIndex] = [String(rankIndex + 1), "-", "-", "0", "0", "0", "10"];
+      rankingData[rankIndex] = [String(rankIndex + 1), "-", "-", "0", "0", "0", "-"];
       set(ref(db, "ranking_data"), rankingData);
     }
   }
@@ -299,11 +306,12 @@ function approveTeam(index) {
   set(ref(db, "pending_teams"), pendingTeams);
   set(ref(db, "approved_teams"), approvedTeams);
 
+  // 빈 순위 슬롯에 팀명과 대표선수, 티어 조합을 자동 등록
   const emptyIndex = rankingData.findIndex(r => r[1] === "-" || r[1] === "");
   if (emptyIndex !== -1) {
     rankingData[emptyIndex][1] = team.name;
     rankingData[emptyIndex][2] = team.players[0];
-    rankingData[emptyIndex][6] = String(team.tierScore || 10);
+    rankingData[emptyIndex][6] = team.tierCombo || "-";
     set(ref(db, "ranking_data"), rankingData);
   }
 
@@ -320,7 +328,7 @@ function rejectTeam(index) {
 // 관리자 기능: 순위 행 초기화
 function deleteRankingRow(index) {
   if (!confirm("이 순위 행을 초기화하시겠습니까?")) return;
-  rankingData[index] = [String(index + 1), "-", "-", "0", "0", "0", "10"];
+  rankingData[index] = [String(index + 1), "-", "-", "0", "0", "0", "-"];
   set(ref(db, "ranking_data"), rankingData);
   showToast("행이 초기화되었습니다.");
 }
@@ -338,7 +346,7 @@ $("#saveRankingBtn")?.addEventListener("click", () => {
       const kills = parseInt(tds[3].innerText.replace(/[^0-9]/g, ""), 10) || 0;
       const rankPts = parseInt(tds[4].innerText.replace(/[^0-9]/g, ""), 10) || 0;
       const totalPts = kills + rankPts;
-      const tierScore = tds[6] ? tds[6].innerText.replace(/[^0-9]/g, "").trim() || "10" : "10";
+      const tierCombo = tds[6] ? tds[6].innerText.trim() : "-";
 
       newRanking.push([
         String(idx + 1),
@@ -347,7 +355,7 @@ $("#saveRankingBtn")?.addEventListener("click", () => {
         String(kills),
         String(rankPts),
         String(totalPts),
-        tierScore
+        tierCombo
       ]);
     }
   });
@@ -377,7 +385,6 @@ $("#adminToggleBtn")?.addEventListener("click", () => {
     $("#adminToggleBtn").style.display = "none";
     $("#adminControls").style.display = "flex";
     document.querySelectorAll(".admin-only-inline").forEach(el => el.style.display = "inline-flex");
-    document.querySelectorAll(".admin-col").forEach(el => el.style.display = "table-cell");
     renderTeams();
     renderRanking();
     renderPendingList();
@@ -392,7 +399,6 @@ $("#adminLogoutBtn")?.addEventListener("click", () => {
   $("#adminToggleBtn").style.display = "block";
   $("#adminControls").style.display = "none";
   document.querySelectorAll(".admin-only-inline").forEach(el => el.style.display = "none");
-  document.querySelectorAll(".admin-col").forEach(el => el.style.display = "none");
   renderTeams();
   renderRanking();
   showToast("로그아웃 되었습니다.");
