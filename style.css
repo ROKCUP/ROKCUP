@@ -1273,3 +1273,93 @@ input:focus {
   text-align: center;
   padding: 8px 4px;
 }
+
+/* 신청 대기열 카드 스타일 보완 */
+.pending-card {
+  background: #07090e;
+  border: 1px solid #1e293b;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.pending-card:hover {
+  border-color: #3b82f6;
+}
+
+.pending-info {
+  flex: 1;
+}
+
+.pending-info h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pending-info p {
+  margin: 2px 0;
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.pending-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-approve,
+.btn-reject {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-approve {
+  background: #10b981;
+  color: #fff;
+}
+
+.btn-reject {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-approve:hover,
+.btn-reject:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* 모바일 화면 대응 (550px 이하) */
+@media (max-width: 550px) {
+  .pending-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pending-actions {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .pending-actions button {
+    flex: 1;
+    text-align: center;
+  }
+}
