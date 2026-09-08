@@ -108,7 +108,12 @@ function renderTeams() {
       <article class="team-card">
         ${isAdmin ? `<button class="card-del-btn" data-del-team="${i}">삭제</button>` : ''}
         <span class="team-no">${String(i + 1).padStart(2, "0")} / TEAM</span>
-        <h3>${escapeHtml(team.name)}</h3>
+        
+        <!-- 팀명 영역: 관리자일 때 클릭하면 수정 가능 -->
+        <h3 ${isAdmin ? `data-edit-team="${i}" style="cursor:pointer;" title="클릭하여 팀명 수정"` : ''}>
+          ${escapeHtml(team.name)} ${isAdmin ? '<small style="font-size:12px; color:#38bdf8;">✏️</small>' : ''}
+        </h3>
+        
         <div class="players">${team.players.map(escapeHtml).join(" · ")}</div>
       </article>
     `).join("");
@@ -117,10 +122,19 @@ function renderTeams() {
       teamGrid.insertAdjacentHTML("beforeend", `<div class="empty">OPEN SLOT<br><span>TEAM ${String(i + 1).padStart(2, "0")}</span></div>`);
     }
 
+    // 팀 삭제 버튼 이벤트
     teamGrid.querySelectorAll("[data-del-team]").forEach(btn => {
       btn.addEventListener("click", e => {
         const idx = parseInt(e.target.dataset.delTeam, 10);
         deleteApprovedTeam(idx);
+      });
+    });
+
+    // 팀명 수정 이벤트 (관리자 모드 전용)
+    teamGrid.querySelectorAll("[data-edit-team]").forEach(h3 => {
+      h3.addEventListener("click", e => {
+        const idx = parseInt(e.currentTarget.dataset.editTeam, 10);
+        editTeamName(idx);
       });
     });
   }
@@ -194,6 +208,34 @@ function renderMatchDisplay() {
     display.innerHTML = `<img src="${currentImg}" alt="Match ${currentMatchIndex + 1} Result">`;
   } else {
     display.innerHTML = `<div class="match-placeholder">MATCH ${currentMatchIndex + 1} 결과 이미지가 아직 등록되지 않았습니다.</div>`;
+  }
+}
+
+// ==========================================
+// ✏️ 팀명 수정 함수 (Firebase 연동)
+// ==========================================
+
+function editTeamName(index) {
+  if (!isAdmin) return;
+
+  const currentName = approvedTeams[index].name;
+  const newName = prompt("새로운 팀명을 입력하세요:", currentName);
+
+  if (newName && newName.trim() !== "" && newName.trim() !== currentName) {
+    const updatedName = newName.trim();
+
+    // 1. Approved Teams 업데이트
+    approvedTeams[index].name = updatedName;
+    set(ref(db, "approved_teams"), approvedTeams);
+
+    // 2. 순위표(Ranking) 데이터 내 기존 팀명도 함께 수정
+    const rankIndex = rankingData.findIndex(r => r[1] === currentName);
+    if (rankIndex !== -1) {
+      rankingData[rankIndex][1] = updatedName;
+      set(ref(db, "ranking_data"), rankingData);
+    }
+
+    showToast(`팀명이 '${updatedName}'(으)로 수정되었습니다.`);
   }
 }
 
